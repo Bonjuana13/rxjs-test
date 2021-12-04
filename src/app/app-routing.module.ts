@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./task/task.module').then(m => m.TaskModule)
   },
   {
+    path: 'start-point',
+    loadChildren: () => import('./start-point/start-point.module').then(m => m.StartPointModule)
+  },
+  {
     path: '**', redirectTo: '/task', pathMatch: 'full'
   }
 ];
