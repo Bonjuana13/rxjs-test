@@ -25,28 +25,17 @@ export class StartPointComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
 
-  getFilteredUsers(): Observable<any> {
-    return this.startPointService.filterUsers(this.myForm.controls['in_active'].value == null ? '' : this.myForm.controls['in_active'].value,
-                                                  this.myForm.controls['email'].value == null ? '' : this.myForm.controls['email'].value);
   }
 
   formTyping(): Observable<any> {
     return this.myForm.valueChanges
       .pipe(debounceTime(800),
       switchMap(() => {
-        return this.startPointService.filterUsers(this.myForm.controls['in_active'].value == null ? '' : this.myForm.controls['in_active'].value,
+        return this.startPointService.filteredUsers(this.myForm.controls['in_active'].value == null ? '' : this.myForm.controls['in_active'].value,
                                                     this.myForm.controls['email'].value == null ? '' : this.myForm.controls['email'].value);
       }),
       map(x => x.data));
-  }
-
-  getUsers() {
-    this.startPointService.getUsers().subscribe(users => {
-      // console.log(users);
-      this.users = users.data;
-    });
   }
 
 }

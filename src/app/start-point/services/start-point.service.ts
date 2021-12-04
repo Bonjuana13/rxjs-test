@@ -11,11 +11,7 @@ export class StartPointService {
     private http: HttpClient
   ) { }
 
-  getUsers(): Observable<any> {
-    return this.http.get<any>('https://gorest.co.in/public/v1/users');
-  }
-
-  filterUsers(status: string, email: string): Observable<any> {
+  filteredUsers(status: string, email: string): Observable<any> {
     let params: HttpParams = new HttpParams();
     params = params.append('status', status);
     params = params.append('email', email);
