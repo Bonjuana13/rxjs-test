@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { StartPointService } from './../../services/start-point.service';
-import { Observable, switchMap } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, startWith, switchMap } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
-import { FormControl, FormGroup } from "@angular/forms";
+
+import { StartPointService } from './../../services/start-point.service';
 
 @Component({
   selector: 'app-start-point',
@@ -10,32 +12,35 @@ import { FormControl, FormGroup } from "@angular/forms";
   styleUrls: ['./start-point.component.scss']
 })
 export class StartPointComponent implements OnInit {
-  email: string = '';
-  in_active: any = ['active', 'inactive'];
-
   myForm : FormGroup = new FormGroup({
-    "email": new FormControl(),
-    "in_active": new FormControl(),
+    email:  new FormControl(this.route.snapshot.queryParamMap.get('email')),
+    in_active: new FormControl(this.route.snapshot.queryParamMap.get('status') == 'active' ? true : false),
   });
 
   users: Observable<any> = this.formTyping();
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private startPointService: StartPointService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
   }
 
   formTyping(): Observable<any> {
     return this.myForm.valueChanges
-      .pipe(debounceTime(800),
-      switchMap(() => {
-        return this.startPointService.filteredUsers(this.myForm.controls['in_active'].value == null ? '' : this.myForm.controls['in_active'].value,
-                                                    this.myForm.controls['email'].value == null ? '' : this.myForm.controls['email'].value);
-      }),
-      map(x => x.data));
+      .pipe(
+        debounceTime(800),
+        startWith({ email: this.route.snapshot.queryParamMap.get('email'),
+          in_active: this.route.snapshot.queryParamMap.get('status') == 'active' ? true : false }),
+        switchMap(() => {
+          this.router.navigate([], { queryParams: { email: this.myForm.controls['email'].value, status: this.myForm.controls['in_active'].value ? 'active' : 'inactive' } });
+          return this.startPointService.filteredUsers(this.myForm.controls['in_active'].value ? 'active' : 'inactive',
+            this.myForm.controls['email'].value == null ? '' : this.myForm.controls['email'].value);
+        }),
+        map(x => x.data));
   }
 
 }
