@@ -1,0 +1,4 @@
+<div *ngFor="let article of articles | async" class="w-100 p-2 mb-3 rounded custom-bg">
+  <div class="h5">{{ article.title }}</div>
+  <div class="h5">{{ article.annotation }}</div>
+</div>

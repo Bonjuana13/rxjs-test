@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./start-point/start-point.module').then(m => m.StartPointModule)
   },
   {
+    path: 'start-point-ngrx',
+    loadChildren: () => import('./start-point-ngrx/start-point-ngrx.module').then(m => m.StartPointNgrxModule)
+  },
+  {
     path: '**', redirectTo: '/task', pathMatch: 'full'
   }
 ];

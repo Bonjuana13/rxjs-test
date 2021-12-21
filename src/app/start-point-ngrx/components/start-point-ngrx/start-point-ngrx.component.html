@@ -1,0 +1,13 @@
+<ng-container>
+  <button (click)="getArticles()">TEST</button>
+  <div class="container-fluid">
+    <div class="mt-3">
+      <div *ngFor="let article of articles$ | async" class="w-100 p-2 mb-3 rounded custom-bg">
+        <div class="h3">{{ article.title }}</div>
+        <div class="h3">{{ article.annotation }}</div>
+        <p class="text-center"><img [src]="article.previewImage"></p>
+      </div>
+    </div>
+  </div>
+  <app-child [articles]="articles$"></app-child>
+</ng-container>
