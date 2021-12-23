@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Article } from '../../interfaces/articles';
+
 
 @Component({
   selector: 'app-child',
@@ -11,9 +11,7 @@ import { Article } from '../../interfaces/articles';
 export class ChildComponent implements OnChanges {
   @Input() articles: Observable<any> = new Observable();
 
-  constructor() { }
-
-  ngOnChanges() {
+  ngOnChanges(): void {
     console.log(this.articles);
   }
 

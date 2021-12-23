@@ -1,6 +1,7 @@
-import { createReducer, createSelector, on } from "@ngrx/store";
-import { ActionTypes } from "../action.types";
-import { Article } from "../interfaces/articles";
+import { createReducer, on } from '@ngrx/store';
+
+import { ActionTypes } from '../action.types';
+import { Article } from '../interfaces/articles';
 
 export interface ArticlesState {
   list: Article[];
@@ -12,9 +13,9 @@ const initialState: ArticlesState = {
 
 export const articleReducer = createReducer(
   initialState,
-  on(ActionTypes.LoadArticles, (state, action) => {
-      return {
-        list: action.articles
-      }
+  on(ActionTypes.SaveArticles, (state, action) => {
+    return {
+      list: action.articles
+    };
   }),
-)
+);

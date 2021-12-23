@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
 import { StorageFile } from '../interfaces/storage';
-import { Article } from '../interfaces/articles';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class StartPointNgrxService {
 
   storageFiles(ids: string[]): Observable<Array<StorageFile>> {
     let params = new HttpParams();
-    ids.forEach((id:string, index: number) => {
-      params = params.append(`ids`, id);
+    ids.forEach((id:string) => {
+      params = params.append('ids', id);
     });
     return this.http.get<Array<StorageFile>>(`${environment.apiUrl}storage/list`, { params });
   }

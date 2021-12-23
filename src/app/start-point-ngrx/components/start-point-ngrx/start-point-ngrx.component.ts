@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { noop, Observable, switchMap } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { LoadArticles } from '../../actions/articles.actions';
-import { Article } from '../../interfaces/articles';
+import { Observable } from 'rxjs';
+import { SaveArticles } from '../../actions/articles.actions';
+// import { map } from 'rxjs/operators';
+// import { LoadArticles } from '../../actions/articles.actions';
+// import { Article } from '../../interfaces/articles';
 import { articles } from '../../selectors/articles.selectors';
-import { StartPointNgrxService } from './../../services/start-point-ngrx.service';
+// import { StartPointNgrxService } from './../../services/start-point-ngrx.service';
 
 @Component({
   selector: 'app-start-point',
@@ -13,45 +14,45 @@ import { StartPointNgrxService } from './../../services/start-point-ngrx.service
   styleUrls: ['./start-point-ngrx.component.scss']
 })
 export class StartPointNgrxComponent implements OnInit {
-  articles$: Observable<any> = this.getStoreArticles();
+  storeArticles$: Observable<any> = this.getStoreArticles();
 
   constructor(
-    private startPointNgrxService: StartPointNgrxService,
+    // private startPointNgrxService: StartPointNgrxService,
     private store: Store
   ) { }
 
   ngOnInit(): void { }
 
-  getArticles() {
-    return this.startPointNgrxService.articles()
-      .pipe(
-        switchMap(articles => {
-          return this.startPointNgrxService.storageFiles(articles.applicationsView.map((x: Article) => x.previewImage))
-          .pipe(
-            map(images => {
-              let currentArticles = this.addPicturesToArticles(articles.applicationsView, images);
-              this.store.dispatch(LoadArticles({ articles: currentArticles }))
-              return currentArticles;
-            })
-          );
-        }),
-      ).subscribe(result => {
-        noop
-      });
-  }
+  // getArticles(): Subscription {
+  //   return this.startPointNgrxService.articles()
+  //     .pipe(
+  //       switchMap(resultArticles => {
+  //         return this.startPointNgrxService.storageFiles(resultArticles.applicationsView.map((x: Article) => x.previewImage))
+  //           .pipe(
+  //             map(images => {
+  //               const currentArticles = this.addPicturesToArticles(resultArticles.applicationsView, images);
+  //               this.store.dispatch(LoadArticles({ articles: currentArticles }));
+  //               return currentArticles;
+  //             })
+  //           );
+  //       }),
+  //     ).subscribe(result => {
+  //       console.log(result);
+  //     });
+  // }
 
-  addPicturesToArticles(articles: any[], images: any[]): Article[] {
-    articles.map(el => {
-      return el.previewImage = images.find(item => item.id == el.previewImage).filePath;
-    });
-    return articles;
-  }
+  // addPicturesToArticles(startArticles: any[], startImages: any[]): Article[] {
+  //   startArticles.map(el => {
+  //     return el.previewImage = startImages.find(item => item.id == el.previewImage).filePath;
+  //   });
+  //   return startArticles;
+  // }
 
   getStoreArticles(): Observable<any> {
     return this.store
-    .pipe(
+      .pipe(
         select(articles)
-    );
+      );
   }
 
 }
