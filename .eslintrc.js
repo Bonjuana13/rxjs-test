@@ -7,7 +7,9 @@ module.exports = {
   extends: [
     'airbnb-typescript/base',
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended'],
+    'plugin:@typescript-eslint/recommended',
+    'plugin:ngrx/recommended'
+  ],
   overrides: [
     {
       files: ['*.ts'],
@@ -57,11 +59,16 @@ module.exports = {
       plugins: ['@angular-eslint/template'],
     },
   ],
+  ignorePatterns: ['.eslintrc.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: ['./tsconfig.app.json'],
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: ['simple-import-sort', 'import', 'unused-imports', '@typescript-eslint', '@angular-eslint'],
+  plugins: ['simple-import-sort', 'import', 'unused-imports', '@typescript-eslint', '@angular-eslint', "ngrx"],
+  rules: {
+    'ngrx/select-style': 'error',
+    'ngrx/prefer-action-creator-in-dispatch': 'off'
+  }
 };
