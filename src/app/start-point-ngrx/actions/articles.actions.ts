@@ -3,7 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { Article } from '../interfaces/articles';
 
 export const loadAllArticles = createAction(
-  "[Articles Page] Show all articles"
+  '[Articles Page] Show all articles'
 );
 
 export const SaveArticles = createAction(

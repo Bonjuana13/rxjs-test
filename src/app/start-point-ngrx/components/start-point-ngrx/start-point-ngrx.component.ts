@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { SaveArticles } from '../../actions/articles.actions';
+
 // import { map } from 'rxjs/operators';
 // import { LoadArticles } from '../../actions/articles.actions';
 // import { Article } from '../../interfaces/articles';
@@ -50,8 +50,8 @@ export class StartPointNgrxComponent implements OnInit {
 
   getStoreArticles(): Observable<any> {
     return this.store
-      .pipe(
-        select(articles)
+      .
+      select((articles)
       );
   }
 

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ArticleResolver } from './resolvers/articles.resolvers';
+
 import { StartPointNgrxComponent } from './components/start-point-ngrx/start-point-ngrx.component';
+import { ArticleResolver } from './resolvers/articles.resolvers';
 
 const startPointNgrxRoutes: Routes = [
   {
