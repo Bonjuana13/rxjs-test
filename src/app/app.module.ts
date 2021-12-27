@@ -4,10 +4,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
+import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { entityConfig } from 'src/entity-metadata';
+import { environment } from 'src/environments/environment';
 
+const articleDataServiceConfig: DefaultDataServiceConfig = {
+  root: environment.apiUrl
+}
 
 @NgModule({
   declarations: [
@@ -22,8 +27,11 @@ import { AppRoutingModule } from './app-routing.module';
       maxAge: 25,
     }),
     EffectsModule.forRoot([]),
+    EntityDataModule.forRoot(entityConfig)
   ],
-  providers: [],
+  providers: [
+    { provide: DefaultDataServiceConfig, useValue: articleDataServiceConfig }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
